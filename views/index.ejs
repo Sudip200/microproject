@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  </head>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold mb-4">Projects Available</h1>
+      <form class="flex flex-col mb-4 md:flex-row">
+        <input type="text" placeholder="Search projects..." class="border-gray-300 border rounded-l py-2 px-4 mb-2 md:mb-0 md:mr-2 flex-1">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-r py-2 px-4">Search</button>
+      </form>
+      <a href="/addproject" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded center">
+        Add Project
+      </a>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% projects.forEach(function(project) { %>
+          <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="p-4">
+              <h2 class="text-xl font-bold mb-2"><%= project.title %></h2>
+              <p class="text-gray-700 text-base mb-4"><%= project.description %></p>
+              <ul class="mb-4">
+                <% project.skills.forEach(function(skill) { %>
+                  <li class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><%= skill %></li>
+                <% }) %>
+              </ul>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-xl">$<%= project.budget %></span>
+                <div class="flex">
+                  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-4 mr-2" onclick="callNumber('<%= project.call %>')">Call</button>
+                  <button class="bg-green-500 hover:bg-green-700 text-white font-bold rounded py-2 px-4" onclick="sendEmail('<%= project.email %>')">Email</button>
+                  <button class="bg-green-500 hover:bg-green-700 text-white font-bold rounded py-2 px-4" onclick="openUPIApp('9330257165@paytm')">Pay</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        <% }) %>
+        <script>
+          function callNumber(number) {
+            window.location.href = 'tel:' + number;
+          }
+  
+          function sendEmail(email) {
+  var subject = encodeURIComponent('Project Proposal');
+  var body = encodeURIComponent('Dear Client,\n\nI am writing to submit a proposal for your project. Please find the details below:\n\n...');
+  window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+}
+function openUPIApp(upiId) {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const amount = 100.00; // replace with your desired amount
+  const merchantName = "BuildMyProject"; // replace with your business name
+  const transactionNote = "Payment for order #123"; // replace with your transaction note
+  if (isMobile) {
+        // Redirect to UPI payment app
+        const upiUrl = `upi://pay?pa=${upiId}&pn=${merchantName}&tn=${transactionNote}&am=${amount}`;
+  window.open(upiUrl);
+      } else {
+        // Display QR code and UPI ID
+        const qrCode = new QRCode("qrcode", {
+          text: `upi://${upiId}?amount=${amount}`,
+          width: 256,
+          height: 256,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H,
+        });
+        document.getElementById("upi-id").textContent = `UPI ID: ${upiId}`;
+      }
+  
+}
+
+
+        </script>
+      </div>
+    </div>
+  </body>
+  
+  
+</html>
