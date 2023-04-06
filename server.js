@@ -1,7 +1,7 @@
 // Import dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const mongoose = require('mongoose');
 // Create an instance of Express app
 const app = express();
 
@@ -10,6 +10,48 @@ app.set('view engine', 'ejs');
 
 // Set up Body Parser middleware to parse request bodies
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
+const uri = 'mongodb+srv://dassudipto200:1234@cluster0.3syr1vm.mongodb.net/<database-name>?retryWrites=true&w=majority';
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.log('Error connecting to MongoDB', err));
+
+
+
+  const projectSchema = new mongoose.Schema({
+    title: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    skills: {
+      type: [String],
+      required: true
+    },
+    budget: {
+      type: Number,
+      required: true
+    },
+    call: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    }
+  });
+  
+  module.exports = mongoose.model('Project', projectSchema);
+  
+
+
+
 
 const projects = [
     {
@@ -65,4 +107,6 @@ app.get('/addproject', (req, res) => {
 
 // Start the server
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () =>{mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.log('Error connecting to MongoDB', err))});
