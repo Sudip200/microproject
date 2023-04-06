@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const projects = [
     {
+      id:0,
       title: 'Project 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor mi id enim faucibus viverra.',
       skills: ['HTML', 'CSS', 'JavaScript'],
@@ -21,6 +22,7 @@ const projects = [
       email:"dassudipto200@gmail.com"
     },
     {
+      id:1,
       title: 'Project 2',
       description: 'Nunc et ante sit amet eros ullamcorper auctor vel sit amet mauris. In efficitur ipsum vel ex malesuada dapibus.',
       skills: ['React', 'Node.js', 'MongoDB'],
@@ -29,6 +31,7 @@ const projects = [
       email:"dassudipto200@gmail.com"
     },
     {
+      id:2,
       title: 'Project 3',
       description: 'Praesent eu purus condimentum, volutpat eros at, dignissim sem. Maecenas imperdiet nulla nisl, ut interdum velit suscipit nec.',
       skills: ['Python', 'Django', 'PostgreSQL'],
@@ -48,6 +51,17 @@ app.get('/', (req, res) => {
 app.get('/addproject', (req, res) => {
     res.render('addproject');
   });
+  app.get('/project', (req, res) => {
+    const {id}= req.query; 
+    const project = projects[id] // You need to implement this function to fetch project data by ID
+  
+    if (!project) {
+      res.status(404).send('Project not found');
+    } else {
+      res.render('project', { project });
+    }
+  });
+  
 
 // Start the server
 const port = process.env.PORT || 3000;
