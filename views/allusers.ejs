@@ -1,0 +1,40 @@
+<!-- views/users.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>All Users</title>
+  <!-- Import Tailwind CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">All Users</h1>
+
+    <% if(users.length === 0) { %>
+      <p>No users found.</p>
+    <% } else { %>
+      <ul class="divide-y divide-gray-300">
+        <% users.forEach(function(user) { %>
+          <li class="py-4 flex justify-between items-center">
+            <div class="flex items-center">
+              <img class="w-10 h-10 rounded-full mr-4" src="https://picsum.photos/seed/<%= user._id %>/40" alt="Avatar of <%= user.name %>">
+              <div class="font-medium"><%= user.name %></div>
+            </div>
+            <div class="flex items-center">
+              <div class="text-gray-500"><%= user.email %></div>
+              <a href="mailto:<%= user.email %>" class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Send Email</a>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+  </div>
+
+</body>
+</html>

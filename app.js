@@ -168,13 +168,14 @@ app.post('/adduser', (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.get('/alluser',(req,res)=>{
-  User.find({}).then((user)=>{
-    res.send(user);
+app.get('/alluser9330',(req,res)=>{
+  User.find({}).then((users)=>{
+    res.render('allusers',{users});
   }).catch((err)=>{
     console.log(err);
   })
 })
+
 
 app.get('/addproject', (req, res) => {
   const {id} =req.query;
@@ -207,6 +208,14 @@ app.get('/addproject', (req, res) => {
       res.send('Successfully deleted');
     }).catch((err)=>{
       console.log(err)
+    })
+  })
+  app.get('/allclient9330',(req,res)=>{
+     Client.find({}).then((clients)=>{
+     
+      res.render('allclients',{clients});
+    }).catch((err)=>{
+      console.log(err);
     })
   })
     
