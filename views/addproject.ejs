@@ -19,7 +19,7 @@
         </div>
         <div class="mb-4">
           <label class="block text-gray-700 font-bold mb-2" for="title">Name</label>
-          <input type="text" id="title" name="name" placeholder="Your name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <input type="text" id="title" name="name" placeholder="Your name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="<%= client.name %>" >
         </div>
         <div class="mb-4">
           <label class="block text-gray-700 font-bold mb-2" for="description">Description</label>
@@ -34,51 +34,20 @@
           <input type="text" id="budget" name="budget" placeholder="Enter your project budget" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700 font-bold mb-2" for="call">Call</label>
+          <label class="block text-gray-700 font-bold mb-2" for="call">Contact Call</label>
           <input type="text" id="call" name="call" placeholder="Enter your contact number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700 font-bold mb-2" for="email">Email</label>
-          <input type="text" id="email" name="email" placeholder="Enter your email address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <label class="block text-gray-700 font-bold mb-2" for="email">Email (Proposals will be sent in this email)</label>
+          <input type="text" id="email" name="email" placeholder="Enter your email address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="<%= client.email %>">
         </div>
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-
-        3"  >Post Project</button>
+        3"  >Pay to Project</button>
     </form>
     </div>
     <script>
-    
-      // function onScriptLoad(){
-      // var config = {
-      // "root": "",
-      // "flow": "DEFAULT",
-      // "data": {
-      // "orderId": "1", /* update order id */
-      // "token": "abc", /* update token value */
-      // "tokenType": "TXN_TOKEN",
-      // "amount": "49.00" /* update amount */
-      // },
-      // "handler": {
-      // "notifyMerchant": function(eventName,data){
-      // console.log("notifyMerchant handler function called");
-      // console.log("eventName => ",eventName);
-      // console.log("data => ",data);
-      // }
-      // }
-      // };
-      // if(window.Paytm && window.Paytm.CheckoutJS){
-      // window.Paytm.CheckoutJS.onLoad(function excecuteAfterCompleteLoad() {
-      // // initialze configuration using init method
-      // window.Paytm.CheckoutJS.init(config).then(function onSuccess() {
-      // // after successfully updating configuration, invoke JS Checkout
-      // window.Paytm.CheckoutJS.invoke();
-      // }).catch(function onError(error){
-      // console.log("error => ",error);
-      // });
-      // });
-      // }
-      // }
       </script>
-    <script type="application/javascript" src="https://securegw-stage.paytm.in/merchantpgpui/checkoutjs/merchants/{MID}.js" onload="onScriptLoad();" crossorigin="anonymous"></script>
+    
   
       </body>
     </html>

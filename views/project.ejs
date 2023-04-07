@@ -17,37 +17,39 @@
         <% }) %>
       </ul>
       <p class="mb-4"><strong>Budget:</strong> &#x20b9 <%= project.budget %></p>
-      <p class="mb-4"><strong>Contact Number:</strong> <%= project.call %></p>
+      <!-- <p class="mb-4"><strong>Contact Number:</strong> <%= project.call %></p>
       <p class="mb-4"><strong>Email:</strong> <%= project.email %></p>
-     <p>Call and email send will only work on mobile </p>
+     <p>Call and email send will only work on mobile </p> -->
     
      
     
-     <!-- <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"  onclick="shareURL('<%= project.budget %>,<%= project.title %>')">
+     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"  onclick="shareURL('<%= project.budget %>,<%= project.title %>')">
       Share project
-    </button> -->
-    
+    </button>
+   <% if(islogin){ %>
     </div>
     <div class="p-10">
-      <h1>Submit this form to get email updates about project (mandatory)</h1>
-    <form class="max-w-lg mx-auto">
+      <h1 class="text-xl center">Register or login here to continue</h1>
+    <form class="max-w-lg mx-auto" method="post" action="/adduser">
+      <input  name="proid" type="hidden"  value='<%= project.id %>' />
       <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2" for="name">
           Name
         </label>
-        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="John Doe">
+        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="ex John Doe" name="name">
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2" for="email">
           Email
         </label>
-        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="johndoe@example.com">
+        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="johndoe@example.com" name="email">
       </div>
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" type="submit">
         Submit
       </button>
     </form>
   </div>
+  <% } else { %>
     <div class=" bottom-0 w-full bg-white shadow-md p-6">
         <div class="flex flex-col gap-4">
           <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"  onclick="shareURL('<%= project.budget %>,<%= project.title %>')">
@@ -56,7 +58,9 @@
             <button onclick="sendEmail('<%= project.email %>')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-4 w-full">Send Proposal</button>
             <button onclick="callNumber('<%= project.call %>')" class="bg-green-500 hover:bg-green-700 text-white font-bold rounded py-2 px-4 w-full">Call</button>
           </div>
+         
         </div>
+        <% } %>
   </body>
   <script>
     function shareURL(rupees,title) {

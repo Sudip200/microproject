@@ -17,7 +17,7 @@
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-r py-2 px-4">Search</button>
       </form>
       <div class="flex justify-center mt-4 mb-6 md:mt-6 md:mb-8">
-        <a href="/addproject" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded">
+        <a href="/registerclient" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded">
           Add Project
         </a>
       </div>
@@ -37,7 +37,7 @@
                 <span class="font-bold text-xl"> ₹<%= project.budget %></span>
                 <div class="flex">
                 
-                  <a href="/project?id=<%= project.id %>"  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                  <a href="/project?id=<%= project.id %>&islogin=false"  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
                     Learn More
                   </a>
                   

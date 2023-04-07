@@ -60,11 +60,20 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
       required:true
     }
   })
+  const clientSchema=new mongoose.Schema({
+    name:{
+      type:String
+    },
+    email:{
+      type:String,
+      required:true
+    }
+  })
   
   
   const Project = mongoose.model('Project', projectSchema);
   const User=mongoose.model('User',userSchema);
-
+  const Client =mongoose.model('Client',clientSchema);
 
 
 
@@ -109,18 +118,97 @@ Project.find({}).then((projects)=>{
   console.log("error",err)
 })
 });
+app.get('/registerclient',(req,res)=>{
+  res.render('registerclient');
+})
+app.post('/registerclient',(req,res)=>{
+  const { name, email} = req.body;
+  console.log(req.body);
+  Client.findOne({ email: email })
+    .then((user) => {
+      if (user) {
+        // If user exists, redirect to project page
+        console.log('user exits')
+        res.redirect(`/addproject?id=${user._id}`);
+      } else {
+        // If user doesn't exist, create new user and redirect to project page
+        const newUser = new Client({ name: name, email: email });
+        newUser
+          .save()
+          .then((r) => {
+            console.log('new user');
+            res.redirect(`/addproject?id=${r._id}`);
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+})
+app.post('/adduser', (req, res) => {
+  const { name, email, id, proid } = req.body;
+  console.log(req.body);
+  User.findOne({ email: email })
+    .then((user) => {
+      if (user) {
+        // If user exists, redirect to project page
+        console.log('user exits')
+        res.redirect(`/projectsc?id=${proid}`);
+      } else {
+        // If user doesn't exist, create new user and redirect to project page
+        const newUser = new User({ name: name, email: email });
+        newUser
+          .save()
+          .then((r) => {
+            console.log('new user');
+            res.redirect(`/projectsc?id=${proid}`);
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+});
+
+app.get('/alluser',(req,res)=>{
+  User.find({}).then((user)=>{
+    res.send(user);
+  }).catch((err)=>{
+    console.log(err);
+  })
+})
+
 app.get('/addproject', (req, res) => {
-    res.render('addproject');
+  const {id} =req.query;
+   Client.findById(id).then((client)=>{
+    res.render('addproject',{client});
+   }).catch((err)=>{
+    console.log('error',err)
+   })
+    
   });
   app.get('/project', (req, res) => {
-    const {id}= req.query; 
+    const {id,islogin}= req.query; 
     Project.findById(id).then((project)=>{
-      res.render('project', { project });
+      res.render('project', { project ,islogin });
     }).catch((err)=>{
       console.log("error",err)
     })
     });
-  
+    app.get('/projectsc', (req, res) => {
+      const {id,islogin}= req.query; 
+      Project.findById(id).then((project)=>{
+        res.render('project2', { project,islogin:true });
+      }).catch((err)=>{
+        console.log("error",err)
+      })
+      });
+  app.post('/deleteproject',(req,res)=>{
+    const {id}=req.body;
+    Project.findByIdAndDelete(id).then((r)=>{
+      res.send('Successfully deleted');
+    }).catch((err)=>{
+      console.log(err)
+    })
+  })
     
   
   app.post('/addproject', (req, res) => {
@@ -142,7 +230,7 @@ app.get('/addproject', (req, res) => {
   });
 
 // Start the server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 app.listen(port, () =>{mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.log('Error connecting to MongoDB', err))});
