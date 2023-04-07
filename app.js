@@ -121,6 +121,15 @@ Project.find({}).then((projects)=>{
 app.get('/registerclient',(req,res)=>{
   res.render('registerclient');
 })
+app.get('/clientdashboard',(req,res)=>{
+  const {id}=req.query;
+ Client.findById(id).then((c)=>{
+  Project.find({email:c.email}).then((projects)=>{
+   res.render('clientdashboard',{projects:projects,client:c})
+  })
+ })
+
+})
 app.post('/registerclient',(req,res)=>{
   const { name, email} = req.body;
   console.log(req.body);
@@ -129,7 +138,7 @@ app.post('/registerclient',(req,res)=>{
       if (user) {
         // If user exists, redirect to project page
         console.log('user exits')
-        res.redirect(`/addproject?id=${user._id}`);
+        res.redirect(`/clientdashboard?id=${user._id}`);
       } else {
         // If user doesn't exist, create new user and redirect to project page
         const newUser = new Client({ name: name, email: email });
@@ -137,7 +146,7 @@ app.post('/registerclient',(req,res)=>{
           .save()
           .then((r) => {
             console.log('new user');
-            res.redirect(`/addproject?id=${r._id}`);
+            res.redirect(`/clientdashboard?id=${r._id}`);
           })
           .catch((err) => console.log(err));
       }
@@ -221,6 +230,8 @@ app.get('/addproject', (req, res) => {
     
   
   app.post('/addproject', (req, res) => {
+    const {id}=req.body
+    
     const newProject = new Project({
       title: req.body.title,
       description: req.body.description,
@@ -231,9 +242,7 @@ app.get('/addproject', (req, res) => {
       author:req.body.name,
     });
   newProject.save().then((r)=>{
-    console.log(r);
-   
-    res.redirect('/')
+    res.redirect(`/clientdashboard?id=${id}`)
   }).catch((err)=>res.send(err))
    
   });

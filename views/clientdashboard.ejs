@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  </head>
+  <body>
+    <nav class="bg-gray-800 px-4 py-3">
+      <div class="flex justify-between">
+        <a href="/" class="text-white font-bold">Client Dashboard</a>
+        <a href="/" class="text-gray-300 hover:text-white">Logout</a>
+      </div>
+    </nav>
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h1 class="text-3xl font-bold mb-4">Welcome <%= client.name %></h1>
+        <div class="text-gray-600 mb-4">Your Email <%= client.email %></div>
+      
+      </div>
+      
+    <div class="container mx-auto my-8">
+      <h1 class="text-2xl font-bold mb-4">My Projects</h1>
+      <% if (projects.length > 0) { %>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <% projects.forEach(project => { %>
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2"><%= project.title %></div>
+                <p class="text-gray-700 text-base"><%= project.description %></p>
+              </div>
+              <form action="/deleteproject" method="post" class="mx-20">
+                <input type="hidden" name="id"  value="<%= project._id %>">
+                <button type="submit" class="bg-black text-white py-2 px-4 rounded">Delete Project</button>
+              </form>
+              <div class="px-6 py-4">
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"><%= project.budget %></span>
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700"><%= project.call %></span>
+              </div>
+              
+              
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="text-center gap-4">
+          <p class="text-lg font-bold">You have not uploaded any projects yet. Post Your First Project</p>
+        </div>
+      <% } %>
+      <div class="mt-8">
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+          <div class="md:flex">
+            <div class="md:flex-shrink-0 flex items-center justify-center p-8">
+              <span class="fa-stack fa-4x">
+                <i class="fas fa-circle fa-stack-2x text-blue-500"></i>
+                <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+              </span>
+            </div>
+            <div class="p-8">
+              <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Post More Project</div>
+              <a href="/addproject?id=<%= client._id %>" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Click here to post a new project</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </body>
+</html>
