@@ -58,14 +58,13 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.21 13.89a5 5 0 006.54 6.54"></path>
             </svg>
             <p class="text-gray-600 text-lg"><strong>Project Details:</strong></p>
-            <strong>Email:</strong> <%= project.email %></p>
-<p class="text-gray-600 text-sm">Note: Call and email send will only work on mobile</p>
+            <strong>Email: send proposal here</strong> <%= project.email %></p>
+            <p class="text-gray-600 text-sm animate-pulse ">Note: Call and email send will only work on mobile</p>
+
 </div>
 <div class="p-4">
 <div class="flex justify-end">
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="shareURL('<%= project.budget %>,<%= project.title %>')">
-Share project
-</button>
+
 </div>
 
 </div>
@@ -76,7 +75,7 @@ Share project
     <div class="fixed bottom-0 w-full bg-white shadow-md p-6 left-0 right-0">
         <div class="flex flex-col gap-4">
         
-            <button onclick="sendEmail('<%= project.email %>')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-4 w-full">Send Proposal</button>
+            <button onclick="sendEmail('<%= project.email %>')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-4 w-full">Send Proposal on email (recommended)</button>
             <button onclick="callNumber('<%= project.call %>')" class="bg-green-500 hover:bg-green-700 text-white font-bold rounded py-2 px-4 w-full">Call</button>
           </div>
         </div>
