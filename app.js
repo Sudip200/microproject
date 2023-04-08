@@ -38,7 +38,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
       required: true
     },
     budget: {
-      type: Number,
+      type: String,
       required: true
     },
     call: {
